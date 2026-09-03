@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap:https://sivaranjani-kartheesan.github.io/Portfolio/sitemap.xml
