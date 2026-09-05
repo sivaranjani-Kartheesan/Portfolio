@@ -808,34 +808,12 @@ if(contactForm){
         let service = document.getElementById('cService').value;
         if(service === 'Other'){ service = document.getElementById('cServiceOther').value || 'Other'; }
 
-        const payload = {
-            name: document.getElementById('cName').value,
-            company: document.getElementById('cCompany').value,
-            email: document.getElementById('cEmail').value,
-            phone: document.getElementById('cPhone').value,
-            business_category: document.getElementById('cCategory').value,
-            business_service: service,
-            location: document.getElementById('cLocation').value,
-            budget: document.getElementById('cBudget').value,
-            timeline: document.getElementById('cTimeline').value,
-            message: document.getElementById('cMessage').value,
-        };
-        if(FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')){
-            statusBox.style.display = 'block';
-            statusBox.style.background = '#fff3cd';
-            statusBox.style.color = '#7a5b00';
-            statusBox.textContent = "Form isn't connected yet — Sivaranjani needs to add her Formspree ID in the code (see chat instructions).";
-            return;
-        }
+        const formData = new FormData(); formData.append('name', document.getElementById('cName').value); formData.append('company', document.getElementById('cCompany').value); formData.append('email', document.getElementById('cEmail').value); formData.append('phone', document.getElementById('cPhone').value); formData.append('business_category', document.getElementById('cCategory').value); formData.append('business_service', service); formData.append('location', document.getElementById('cLocation').value); formData.append('budget', document.getElementById('cBudget').value); formData.append('timeline', document.getElementById('cTimeline').value); formData.append('message', document.getElementById('cMessage').value);
 
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending...";
         try{
-            const res = await fetch(FORMSPREE_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+           const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: formData });
             if(res.ok){
                 statusBox.style.display = 'block';
                 statusBox.style.background = '#e7f9ee';
